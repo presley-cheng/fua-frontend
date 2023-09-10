@@ -1,8 +1,10 @@
 import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material';
-import { commonButtonStyle } from '../customStyle/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { appContext } from '../context';
 import { useContext } from 'react';
+import { commonButtonStyle } from '../customStyles';
+import { serverUrl } from '../constants';
+import { UserType } from '../types';
 
 const linkStyle = {
     textDecoration: 'none',
@@ -10,11 +12,31 @@ const linkStyle = {
 }
 
 export default function NavBar() {
-    const { user } = useContext(appContext)
+    const { user, setUser } = useContext(appContext)
+    const navigator = useNavigate()
+
+    const onLogout = async () => {
+        try {
+            const resp = await fetch(serverUrl + "/logout", {
+                credentials: "include"
+            })
+
+            if (!resp.ok) {
+                throw new Error("unexpected error during logout")
+            }
+
+            setUser({} as UserType)
+        } catch (err) {
+            console.error(err)
+        } finally {
+            navigator("login")
+        }
+    }
 
     const showLogout = () => {
         return (
             <Button
+                onClick={onLogout}
                 style={{ ...commonButtonStyle, color: 'white' }}
                 color="inherit"
             >Logout</Button>

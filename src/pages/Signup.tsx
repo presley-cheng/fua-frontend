@@ -1,25 +1,19 @@
 import { Button } from "@mui/material"
-import { useCallback, useContext, useState } from "react"
-import { commonButtonStyle } from "../customStyle/button"
+import { useCallback, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 import SmallForm from "../components/SmallForm"
 import InputField from "../components/InputField"
 
+import { commonButtonStyle, textFieldStyle } from "../customStyles"
 import { SignupType } from "../types"
 import { serverUrl } from "../constants"
-import { useNavigate } from "react-router-dom"
-import { appContext } from "../context"
-
-const textFieldStyle = {
-    borderRadius: "20px",
-}
 
 export default function Signup() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
     const navigator = useNavigate()
-    const { setUser } = useContext(appContext)
 
     const onSignup = useCallback(async (signup: SignupType) => {
         try {
@@ -32,12 +26,11 @@ export default function Signup() {
                 body: JSON.stringify(signup)
             })
 
-            const data = await resp.json()
             if (!resp.ok) {
-                throw new Error(data.error)
+                const { error } = await resp.json()
+                throw new Error(error)
             }
 
-            setUser(data)
             navigator("/dashboard")
         } catch (err) {
             console.error(err)
