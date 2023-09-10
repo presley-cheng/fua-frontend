@@ -15,7 +15,7 @@ export default function Signup() {
     const [name, setName] = useState("")
 
     return (
-        <SmallForm title="Signup">
+        <SmallForm title="Sign up">
             <InputField
                 type="text"
                 input={name}
@@ -48,7 +48,7 @@ export default function Signup() {
                     backgroundColor: "#5c4d4d",
                     color: "white",
                     marginBottom: "1rem"
-                }}>Signup</Button>
+                }}>Sign up</Button>
         </SmallForm>
     )
 }
