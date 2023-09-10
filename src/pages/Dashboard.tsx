@@ -26,7 +26,9 @@ export default function Dashboard() {
 
     return (
         <>
-            <h1>Welcome {user.name}!</h1>
+            {Object.keys(user).length === 0 ? "" :
+                <h1>Welcome {user.name}!</h1>
+            }
         </>
     )
 }
