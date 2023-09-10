@@ -1,24 +1,50 @@
 import { Button } from "@mui/material"
-import { useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import { commonButtonStyle } from "../customStyle/button"
 
 import SmallForm from "../components/SmallForm"
 import InputField from "../components/InputField"
 
 import { SignupType } from "../types"
+import { serverUrl } from "../constants"
+import { useNavigate } from "react-router-dom"
+import { appContext } from "../context"
 
 const textFieldStyle = {
     borderRadius: "20px",
 }
 
-interface Props {
-    onSignup: (signup: SignupType) => Promise<void>
-}
-
-export default function Signup({ onSignup }: Props) {
+export default function Signup() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
+    const navigator = useNavigate()
+    const { setUser } = useContext(appContext)
+
+    const onSignup = useCallback(async (signup: SignupType) => {
+        try {
+            const resp = await fetch(serverUrl + "/signup", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(signup)
+            })
+
+            const data = await resp.json()
+            if (!resp.ok) {
+                throw new Error(data.error)
+            }
+
+            setUser(data)
+            navigator("/dashboard")
+        } catch (err) {
+            console.error(err)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []
+    )
 
     return (
         <SmallForm title="Sign up">

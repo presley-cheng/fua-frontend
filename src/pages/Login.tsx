@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useCallback } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { commonButtonStyle } from "../customStyle/button"
 
@@ -9,16 +9,18 @@ import InputField from "../components/InputField"
 import { LoginType } from "../types"
 import { appContext } from "../context"
 
+import { serverUrl } from "../constants"
+
 const textFieldStyle = {
     borderRadius: "20px",
 }
 
-interface Props {
-    onLogin: (login: LoginType) => Promise<void>
-}
+// interface Props {
+//     onLogin: (login: LoginType) => Promise<void>
+// }
 
-export default function Login({ onLogin }: Props) {
-    const { user } = useContext(appContext)
+export default function Login() {
+    const { user, setUser } = useContext(appContext)
     const navigator = useNavigate()
 
     const [username, setUsername] = useState("")
@@ -28,6 +30,31 @@ export default function Login({ onLogin }: Props) {
         if (Object.keys(user).length > 0) navigator("/dashboard")
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const onLogin = useCallback(async (login: LoginType) => {
+        try {
+            const resp = await fetch(serverUrl + "/login", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(login)
+            })
+
+            const data = await resp.json()
+            if (!resp.ok) {
+                throw new Error(data.error)
+            }
+
+            setUser(data)
+            navigator("/dashboard")
+        } catch (err) {
+            console.error(err)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []
+    )
 
     return (
         <SmallForm title="Login">
