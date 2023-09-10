@@ -9,6 +9,7 @@ import {
 import { commonButtonStyle } from "../customStyle/button"
 import InputField from "../components/InputField"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 const textFieldStyle = {
     borderRadius: "20px",
@@ -57,14 +58,16 @@ export default function Login() {
                         color: "white",
                         marginBottom: "1rem"
                     }}>Login</Button>
-                <Button
-                    variant="outlined"
-                    fullWidth
-                    style={{
-                        ...commonButtonStyle,
-                        color: "gray",
-                        borderColor: "gray"
-                    }}>Sign up</Button>
+                <Link to="/signup">
+                    <Button
+                        variant="outlined"
+                        fullWidth
+                        style={{
+                            ...commonButtonStyle,
+                            color: "gray",
+                            borderColor: "gray"
+                        }}>No account? Sign up</Button>
+                </Link>
             </Paper>
         </Container >
     )

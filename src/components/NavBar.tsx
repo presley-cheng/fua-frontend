@@ -24,15 +24,19 @@ export default function NavBar() {
                         >FUA</Typography>
                     </Link>
                     <div>
-                        <Link to="/signup" style={linkStyle}>
-                            <Button style={commonButtonStyle} color="inherit">Signup</Button>
+                        <Link to="/signup">
+                            <Button
+                                style={{ ...commonButtonStyle, color: 'white' }}
+                                color="inherit"
+                            >Signup</Button>
                         </Link>
-                        <Link to="/login" style={linkStyle}>
+                        <Link to="/login">
                             <Button
                                 style={{
                                     ...commonButtonStyle,
                                     backgroundColor: "#5c4d4d",
-                                    marginLeft: '0.5rem'
+                                    marginLeft: '0.5rem',
+                                    color: 'white'
                                 }}
                                 variant='contained'
                                 color="inherit"
