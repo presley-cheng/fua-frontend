@@ -13,6 +13,7 @@ export default function InputField({ required, type, style, label, input, setInp
     return (
         <TextField
             value={input}
+            autoComplete="off"
             onChange={(e) => setInput(e.target.value)}
             InputProps={{ sx: style }}
             fullWidth

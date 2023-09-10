@@ -1,18 +1,32 @@
 import { Button } from "@mui/material"
-
+import { useContext, useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { commonButtonStyle } from "../customStyle/button"
-import InputField from "../components/InputField"
-import { useState } from "react"
-import { Link } from "react-router-dom"
+
 import SmallForm from "../components/SmallForm"
+import InputField from "../components/InputField"
+
+import { LoginType } from "../types"
+import { appContext } from "../context"
 
 const textFieldStyle = {
     borderRadius: "20px",
 }
 
-export default function Login() {
+interface Props {
+    onLogin: (login: LoginType) => Promise<void>
+}
+
+export default function Login({ onLogin }: Props) {
+    const { user } = useContext(appContext)
+    const navigator = useNavigate()
+
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+
+    useEffect(() => {
+        if (Object.keys(user).length > 0) navigator("/dashboard")
+    }, [])
 
     return (
         <SmallForm title="Login">
@@ -35,6 +49,7 @@ export default function Login() {
             <Button
                 variant="contained"
                 fullWidth
+                onClick={() => onLogin({ username, password })}
                 style={{
                     ...commonButtonStyle,
                     backgroundColor: "#5c4d4d",

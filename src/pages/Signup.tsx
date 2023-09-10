@@ -1,15 +1,21 @@
 import { Button } from "@mui/material"
-
-import { commonButtonStyle } from "../customStyle/button"
-import InputField from "../components/InputField"
 import { useState } from "react"
+import { commonButtonStyle } from "../customStyle/button"
+
 import SmallForm from "../components/SmallForm"
+import InputField from "../components/InputField"
+
+import { SignupType } from "../types"
 
 const textFieldStyle = {
     borderRadius: "20px",
 }
 
-export default function Signup() {
+interface Props {
+    onSignup: (signup: SignupType) => Promise<void>
+}
+
+export default function Signup({ onSignup }: Props) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
@@ -43,6 +49,7 @@ export default function Signup() {
             <Button
                 variant="contained"
                 fullWidth
+                onClick={() => onSignup({ name, username, password })}
                 style={{
                     ...commonButtonStyle,
                     backgroundColor: "#5c4d4d",
