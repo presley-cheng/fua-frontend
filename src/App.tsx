@@ -12,7 +12,7 @@ import NavBar from "./components/NavBar"
 
 import { UserType, LoginType, SignupType } from "./types";
 import { appContext } from "./context";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const theme = createTheme({
   typography: {
@@ -26,7 +26,7 @@ function App() {
   const navigator = useNavigate()
   const [user, setUser] = useState({} as UserType)
 
-  const onLogin = async (login: LoginType) => {
+  const onLogin = useCallback(async (login: LoginType) => {
     try {
       const resp = await fetch(serverUrl + "/login", {
         method: "POST",
@@ -39,8 +39,7 @@ function App() {
 
       const data = await resp.json()
       if (!resp.ok) {
-        console.log(data.error)
-        return
+        throw new Error(data.error)
       }
 
       setUser(data)
@@ -48,7 +47,9 @@ function App() {
     } catch (err) {
       console.error(err)
     }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []
+  )
 
   const onSignup = async (signup: SignupType) => {
     navigator("/dashboard")

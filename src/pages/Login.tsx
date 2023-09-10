@@ -26,6 +26,7 @@ export default function Login({ onLogin }: Props) {
 
     useEffect(() => {
         if (Object.keys(user).length > 0) navigator("/dashboard")
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
