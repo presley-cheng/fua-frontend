@@ -5,6 +5,18 @@
 
 }
 
-body {
+body #root {
     background-color: #f2f1e7;
+}
+
+:root {
+    --fc-button-bg-color: #5c4d4d;
+    --fc-button-border-color: #312c2c;
+    --fc-button-hover-bg-color: #312c2c;
+    --fc-border-color: #000000;
+    --fc-today-bg-color: #ecbbaa;
+}
+
+.fc {
+    background-color: #f2e7d2;
 }

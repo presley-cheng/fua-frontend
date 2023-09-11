@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { appContext } from '../context';
 import { useContext } from 'react';
@@ -89,29 +89,27 @@ export default function NavBar() {
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{ backgroundColor: "#a96851" }}>
-                <Toolbar
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        pr: 1
-                    }}>
-                    <Link to="/" style={linkStyle}>
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontSize: '2rem',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                            }}
-                        >FUA</Typography>
-                    </Link>
-                    {Object.keys(user).length > 0 && showFeatures()}
-                    {Object.keys(user).length === 0 ? showLogin() : showLogout()}
-                </Toolbar>
-            </AppBar>
-        </Box>
+        <AppBar position="static" sx={{ backgroundColor: "#a96851" }}>
+            <Toolbar
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    pr: 1
+                }}>
+                <Link to="/" style={linkStyle}>
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontSize: '2rem',
+                            fontWeight: 700,
+                            letterSpacing: '.3rem',
+                        }}
+                    >FUA</Typography>
+                </Link>
+                {Object.keys(user).length > 0 && showFeatures()}
+                {Object.keys(user).length === 0 ? showLogin() : showLogout()}
+            </Toolbar>
+        </AppBar>
     );
 }

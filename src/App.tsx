@@ -17,6 +17,7 @@ import { UserType } from "./types";
 import { appContext } from "./context";
 import { useCallback, useEffect, useState } from "react";
 import { serverUrl } from "./constants";
+import { Box } from "@mui/material";
 
 const theme = createTheme({
   typography: {
@@ -30,9 +31,9 @@ function App() {
   const location = useLocation()
   const navigator = useNavigate()
 
-  const isLoginSignup = useCallback(() => {
+  const isLoginSignup = () => {
     return (location.pathname === "/login" || location.pathname === "/signup")
-  }, [])
+  }
 
   const getUser = useCallback(async () => {
     try {
@@ -53,8 +54,10 @@ function App() {
       setError((err as Error).message)
       navigator("/login")
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { getUser().then() }, [])
 
   return (
@@ -63,14 +66,16 @@ function App() {
         <CssBaseline />
         <NavBar />
         <CustomAlert severity="error" message={error} onClose={setError} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/calendar" element={<Calendar />} />
-          <Route path="/notes" element={<Notes />} />
-          <Route path="/patients" element={<Patients />} />
-        </Routes>
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/calendar" element={<Calendar />} />
+            <Route path="/notes" element={<Notes />} />
+            <Route path="/patients" element={<Patients />} />
+          </Routes>
+        </Box>
       </ThemeProvider>
     </appContext.Provider>
   )
