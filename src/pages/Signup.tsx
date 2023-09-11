@@ -14,7 +14,7 @@ export default function Signup() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
-    const { setError } = useContext(appContext)
+    const { setUser, setError } = useContext(appContext)
     const navigator = useNavigate()
 
     const onSignup = useCallback(async (signup: SignupType) => {
@@ -28,11 +28,13 @@ export default function Signup() {
                 body: JSON.stringify(signup)
             })
 
+            const data = await resp.json()
+
             if (!resp.ok) {
-                const { error } = await resp.json()
-                throw new Error(error)
+                throw new Error(data.error)
             }
 
+            setUser(data)
             navigator("/calendar")
         } catch (err) {
             console.error(err)

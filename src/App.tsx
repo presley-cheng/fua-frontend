@@ -1,6 +1,6 @@
 import "./App.css"
 
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -15,7 +15,8 @@ import CustomAlert from "./components/CustomAlert";
 
 import { UserType } from "./types";
 import { appContext } from "./context";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { serverUrl } from "./constants";
 
 const theme = createTheme({
   typography: {
@@ -26,6 +27,35 @@ const theme = createTheme({
 function App() {
   const [user, setUser] = useState({} as UserType)
   const [error, setError] = useState("")
+  const location = useLocation()
+  const navigator = useNavigate()
+
+  const isLoginSignup = useCallback(() => {
+    return (location.pathname === "/login" || location.pathname === "/signup")
+  }, [])
+
+  const getUser = useCallback(async () => {
+    try {
+      const resp = await fetch(serverUrl + "/user", { credentials: "include" })
+      if (resp.status === 401 && isLoginSignup()) {
+        return
+      }
+
+      const data = await resp.json()
+      if (data.error) {
+        throw new Error(data.error)
+      }
+
+      setUser(data)
+      if (isLoginSignup()) navigator("/calendar")
+    } catch (err) {
+      console.error(err)
+      setError((err as Error).message)
+      navigator("/login")
+    }
+  }, [])
+
+  useEffect(() => { getUser().then() }, [])
 
   return (
     <appContext.Provider value={{ user, setUser, setError }}>

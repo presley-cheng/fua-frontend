@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { useEffect, useState, useCallback, useContext } from "react"
+import { useState, useCallback, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import SmallForm from "../components/SmallForm"
@@ -12,36 +12,11 @@ import { serverUrl } from "../constants"
 import { appContext } from "../context"
 
 export default function Login() {
-    const { setError } = useContext(appContext)
+    const { setUser, setError } = useContext(appContext)
     const navigator = useNavigate()
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
-    const checkLoggedin = async () => {
-        try {
-            const resp = await fetch(serverUrl + "/isloggedin", { credentials: 'include' })
-            const data = await resp.json()
-            if (resp.status === 401) {
-                return
-            }
-
-            if (!resp.ok) {
-                throw new Error(data.error)
-            }
-
-            navigator("/calendar")
-        } catch (err) {
-            console.error(err)
-            setError(err as string)
-            navigator("/login")
-        }
-    }
-
-    useEffect(() => {
-        checkLoggedin().then()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const onLogin = useCallback(async (login: LoginType) => {
         try {
@@ -54,11 +29,12 @@ export default function Login() {
                 body: JSON.stringify(login)
             })
 
+            const data = await resp.json()
             if (!resp.ok) {
-                const { error } = await resp.json()
-                throw new Error(error)
+                throw new Error(data.error)
             }
 
+            setUser(data)
             navigator("/calendar")
         } catch (err) {
             console.error(err)
