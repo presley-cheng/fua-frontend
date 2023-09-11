@@ -14,3 +14,5 @@ export interface SignupType {
   username: string;
   password: string;
 }
+
+export type Severity = "error" | "warning" | "info" | "success";

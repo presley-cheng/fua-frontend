@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useContext } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import SmallForm from "../components/SmallForm"
@@ -9,8 +9,10 @@ import { commonButtonStyle, textFieldStyle } from "../customStyles"
 import { LoginType } from "../types"
 
 import { serverUrl } from "../constants"
+import { appContext } from "../context"
 
 export default function Login() {
+    const { setError } = useContext(appContext)
     const navigator = useNavigate()
 
     const [username, setUsername] = useState("")
@@ -31,6 +33,7 @@ export default function Login() {
             navigator("/dashboard")
         } catch (err) {
             console.error(err)
+            setError(err as string)
             navigator("/login")
         }
     }
@@ -59,6 +62,7 @@ export default function Login() {
             navigator("/dashboard")
         } catch (err) {
             console.error(err)
+            setError((err as Error).message)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []

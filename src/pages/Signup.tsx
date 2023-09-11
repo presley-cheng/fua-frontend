@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { useCallback, useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import SmallForm from "../components/SmallForm"
@@ -8,11 +8,13 @@ import InputField from "../components/InputField"
 import { commonButtonStyle, textFieldStyle } from "../customStyles"
 import { SignupType } from "../types"
 import { serverUrl } from "../constants"
+import { appContext } from "../context"
 
 export default function Signup() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [name, setName] = useState("")
+    const { setError } = useContext(appContext)
     const navigator = useNavigate()
 
     const onSignup = useCallback(async (signup: SignupType) => {
@@ -34,6 +36,7 @@ export default function Signup() {
             navigator("/dashboard")
         } catch (err) {
             console.error(err)
+            setError(err as string)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []

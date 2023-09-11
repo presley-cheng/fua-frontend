@@ -9,6 +9,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Dashboard from "./pages/Dashboard";
 import NavBar from "./components/NavBar"
+import CustomAlert from "./components/CustomAlert";
 
 import { UserType } from "./types";
 import { appContext } from "./context";
@@ -20,16 +21,16 @@ const theme = createTheme({
   }
 })
 
-// const serverUrl = "http://localhost:3000"
-
 function App() {
   const [user, setUser] = useState({} as UserType)
+  const [error, setError] = useState("")
 
   return (
-    <appContext.Provider value={{ user, setUser }}>
+    <appContext.Provider value={{ user, setUser, setError }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <NavBar />
+        <CustomAlert severity="error" message={error} onClose={setError} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

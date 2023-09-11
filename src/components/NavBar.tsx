@@ -83,6 +83,7 @@ export default function NavBar() {
                             }}
                         >FUA</Typography>
                     </Link>
+                    <h1>{Object.keys(user).length}</h1>
                     {Object.keys(user).length === 0 ? showLogin() : showLogout()}
                 </Toolbar>
             </AppBar>
