@@ -36,7 +36,7 @@ export default function Signup() {
             navigator("/dashboard")
         } catch (err) {
             console.error(err)
-            setError(err as string)
+            setError((err as Error).message)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []

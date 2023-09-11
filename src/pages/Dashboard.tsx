@@ -4,7 +4,7 @@ import { appContext } from "../context"
 import { useNavigate } from "react-router-dom"
 
 export default function Dashboard() {
-    const { user, setUser } = useContext(appContext)
+    const { user, setUser, setError } = useContext(appContext)
     const navigator = useNavigate()
 
     useEffect(() => {
@@ -19,6 +19,7 @@ export default function Dashboard() {
             })
             .catch(err => {
                 console.error(err)
+                setError((err as Error).message)
                 navigator("/login")
             })
         // eslint-disable-next-line react-hooks/exhaustive-deps
