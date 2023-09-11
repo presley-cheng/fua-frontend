@@ -33,7 +33,7 @@ export default function Signup() {
                 throw new Error(error)
             }
 
-            navigator("/dashboard")
+            navigator("/calendar")
         } catch (err) {
             console.error(err)
             setError((err as Error).message)

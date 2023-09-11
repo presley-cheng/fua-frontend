@@ -20,7 +20,7 @@ export default function Login() {
 
     const checkLoggedin = async () => {
         try {
-            const resp = await fetch(serverUrl + "/dashboard", { credentials: 'include' })
+            const resp = await fetch(serverUrl + "/isloggedin", { credentials: 'include' })
             const data = await resp.json()
             if (resp.status === 401) {
                 return
@@ -30,7 +30,7 @@ export default function Login() {
                 throw new Error(data.error)
             }
 
-            navigator("/dashboard")
+            navigator("/calendar")
         } catch (err) {
             console.error(err)
             setError(err as string)
@@ -59,7 +59,7 @@ export default function Login() {
                 throw new Error(error)
             }
 
-            navigator("/dashboard")
+            navigator("/calendar")
         } catch (err) {
             console.error(err)
             setError((err as Error).message)

@@ -7,7 +7,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-import Dashboard from "./pages/Dashboard";
+import Calendar from "./pages/Calendar";
+import Notes from "./pages/Notes";
+import Patients from "./pages/Patients";
 import NavBar from "./components/NavBar"
 import CustomAlert from "./components/CustomAlert";
 
@@ -35,7 +37,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/notes" element={<Notes />} />
+          <Route path="/patients" element={<Patients />} />
         </Routes>
       </ThemeProvider>
     </appContext.Provider>
