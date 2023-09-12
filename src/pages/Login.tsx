@@ -1,9 +1,8 @@
-import { Button } from "@mui/material"
-import { useState, useCallback, useContext } from "react"
+import { Button, TextField } from "@mui/material"
+import { useState, useCallback, useContext, ChangeEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import SmallForm from "../components/SmallForm"
-import InputField from "../components/InputField"
 
 import { commonButtonStyle, textFieldStyle } from "../customStyles"
 import { LoginType } from "../types"
@@ -12,11 +11,9 @@ import { serverUrl } from "../constants"
 import { appContext } from "../context"
 
 export default function Login() {
+    const [input, setInput] = useState<LoginType>({ username: "", password: "" })
     const { setUser, setError } = useContext(appContext)
     const navigator = useNavigate()
-
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
 
     const onLogin = useCallback(async (login: LoginType) => {
         try {
@@ -44,28 +41,43 @@ export default function Login() {
     }, []
     )
 
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInput(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+    }
+
     return (
         <SmallForm title="Login">
-            <InputField
+            <TextField
+                value={input.username}
+                autoComplete="off"
+                name="username"
+                onChange={onInputChange}
+                InputProps={{ sx: textFieldStyle }}
+                fullWidth
                 type="text"
-                input={username}
-                setInput={setUsername}
-                required={true}
+                required
+                variant="outlined"
                 label="Username"
-                style={{ ...textFieldStyle, mb: 2 }}
             />
-            <InputField
+            <TextField
+                value={input.password}
+                autoComplete="off"
+                name="password"
+                onChange={onInputChange}
+                InputProps={{ sx: textFieldStyle }}
+                fullWidth
                 type="password"
-                input={password}
-                setInput={setPassword}
-                required={true}
+                required
+                variant="outlined"
                 label="Password"
-                style={{ ...textFieldStyle, mb: 3 }}
             />
             <Button
                 variant="contained"
                 fullWidth
-                onClick={() => onLogin({ username, password })}
+                onClick={() => onLogin(input)}
                 style={{
                     ...commonButtonStyle,
                     backgroundColor: "#5c4d4d",

@@ -5,4 +5,5 @@ export const commonButtonStyle = {
 
 export const textFieldStyle = {
   borderRadius: "20px",
+  mb: 2,
 };
