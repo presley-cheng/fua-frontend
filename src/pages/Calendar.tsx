@@ -1,6 +1,6 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction'
 import { Paper, Box } from '@mui/material'
 import { EventClickArg, EventDropArg } from '@fullcalendar/core/index.js'
 
@@ -27,10 +27,15 @@ export default function Calendar() {
         console.log(info.event.start)
     }
 
-    // TODO: show a dialog for event details (start/end time, notes, ...)
+    // TODO: show an edit (with delete option) dialog for event details (start/end time, notes, ...)
     const onEventClick = (info: EventClickArg) => {
         console.log(info.event.id)
         console.log(info.event.start)
+    }
+
+    // TODO: show a create event dialog with date filled in
+    const onDateClick = (info: DateClickArg) => {
+        console.log(info.date + " clicked")
     }
 
     return (
@@ -53,6 +58,7 @@ export default function Calendar() {
                     events={events}
                     eventDrop={onEventDrop}
                     eventClick={onEventClick}
+                    dateClick={onDateClick}
                 />
             </Paper>
         </Box>

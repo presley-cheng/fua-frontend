@@ -66,7 +66,12 @@ function App() {
         <CssBaseline />
         <NavBar />
         <CustomAlert severity="error" message={error} onClose={setError} />
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          height: '92vh'
+        }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
