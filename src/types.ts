@@ -16,3 +16,16 @@ export interface SignupType {
 }
 
 export type Severity = "error" | "warning" | "info" | "success";
+
+export interface EventType {
+  id?: string;
+  title: string;
+  note: string;
+  date: string;
+}
+
+export interface CalendarFormMeta {
+  title: string;
+  submitBtn: string;
+  onSubmit: () => Promise<void>;
+}
