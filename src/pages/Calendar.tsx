@@ -39,16 +39,23 @@ export default function Calendar() {
                 },
                 body: JSON.stringify(event)
             })
-            const data = await resp.json()
 
             if (!resp.ok) {
                 if (resp.status === 401) {
                     navigator("/login")
                 }
-                throw new Error(data.error)
+                throw new Error('Error updating event: please sign in before proceeding')
             }
 
-            setEvents(prev => [...prev, data])
+            setEvents(prev => prev.map(item => {
+                if (item.id === event.id) {
+                    item.title = event.title
+                    item.note = event.note
+                    item.date = event.date
+                }
+
+                return item
+            }))
         } catch (err) {
             console.error(err)
             setError((err as Error).message)
