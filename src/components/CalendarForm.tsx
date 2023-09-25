@@ -6,7 +6,7 @@ import {
     DialogContent,
     DialogTitle,
 } from "@mui/material"
-import { textFieldStyle } from "../customStyles"
+import { commonButtonStyle, textFieldStyle } from "../customStyles"
 import { EventType } from "../types"
 import { ChangeEvent } from "react"
 
@@ -28,7 +28,10 @@ export default function CalendarForm({ dialogTitle, open, onClose, submitBtnText
     }
 
     return (
-        <Dialog open={open} onClose={onClose}>
+        <Dialog
+            open={open}
+            onClose={onClose}
+        >
             <DialogTitle>{dialogTitle}</DialogTitle>
             <DialogContent>
                 <TextField
@@ -58,8 +61,22 @@ export default function CalendarForm({ dialogTitle, open, onClose, submitBtnText
                 />
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Cancel</Button>
-                <Button onClick={onSubmit}>{submitBtnText}</Button>
+                <Button
+                    onClick={onClose}
+                    style={{
+                        ...commonButtonStyle,
+                        color: "gray",
+                        borderColor: "gray"
+                    }}>Cancel</Button>
+                <Button
+                    variant="contained"
+                    onClick={onSubmit}
+                    style={{
+                        ...commonButtonStyle,
+                        backgroundColor: "#5c4d4d",
+                        color: "white",
+                    }}
+                >{submitBtnText}</Button>
             </DialogActions>
         </Dialog>
     )

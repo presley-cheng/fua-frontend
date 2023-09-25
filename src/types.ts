@@ -23,9 +23,3 @@ export interface EventType {
   note: string;
   date: string;
 }
-
-export interface CalendarFormMeta {
-  title: string;
-  submitBtn: string;
-  onSubmit: () => Promise<void>;
-}
