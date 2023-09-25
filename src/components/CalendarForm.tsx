@@ -31,6 +31,12 @@ export default function CalendarForm({ dialogTitle, open, onClose, submitBtnText
         <Dialog
             open={open}
             onClose={onClose}
+            PaperProps={{
+                style: {
+                    borderRadius: '20px',
+                    width: '50rem',
+                }
+            }}
         >
             <DialogTitle>{dialogTitle}</DialogTitle>
             <DialogContent>
@@ -55,7 +61,7 @@ export default function CalendarForm({ dialogTitle, open, onClose, submitBtnText
                     InputProps={{ sx: textFieldStyle }}
                     type="text"
                     multiline
-                    rows={6}
+                    rows={10}
                     fullWidth
                     variant="outlined"
                 />
